@@ -4,12 +4,18 @@ pipeline {
     stages {
         stage('Compila') {
             steps {
-                echo 'Hello World'
+                dir("Servicios/curso-microservicios"){
+
+
+                sh "docker build -t microservicio ."
+
+                }
+               
             }
         }
         stage('DBDeploy') {
             steps {
-                sh "docker ps"
+                sh "docker images"
             }
         }
     }
