@@ -7,7 +7,7 @@ pipeline {
 
     stages {
         
-        stage('Validate'){
+       /* stage('Validate'){
             steps {
                 dir("Servicios/Curso-Microservicios"){
                     withSonarQubeEnv('SonarServer'){
@@ -20,7 +20,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
 
         stage('Compila') {
             steps {
@@ -33,9 +33,19 @@ pipeline {
                
             }
         }
-        stage('DBDeploy') {
+        /*stage('DBDeploy') {
             steps {
                 sh "docker images"
+            }
+
+        }*/
+
+        stage('Push Image') {
+            steps {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker_nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                    sh 'docker login 172.21.96.1:8083 -u $USERNAME -p $PASSWORD'
+                    sh 'docker push 172.21.96.1:8083/repository/docker-private/microservicio:latest'  
+                }
             }
         }
     }
