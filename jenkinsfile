@@ -39,10 +39,10 @@ pipeline {
 
         stage('Database') {
             steps {
-                //dir("liquibase/"){
+                dir("liquibase/"){
 
 
-               // sh '/opt/liquibase/liquibase --changeLogFile="changesets/db.changelog-master.xml" update'
+                sh '/opt/liquibase/liquibase --changeLogFile="changesets/db.changelog-master.xml" update'
 
                 }
                
